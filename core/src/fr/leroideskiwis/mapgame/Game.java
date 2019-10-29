@@ -8,12 +8,13 @@ import fr.leroideskiwis.mapgame.entities.Enemy;
 import fr.leroideskiwis.mapgame.entities.Obstacle;
 import fr.leroideskiwis.mapgame.entities.Player;
 import fr.leroideskiwis.mapgame.entities.SpecialObj;
+import fr.leroideskiwis.mapgame.entities.enemies.BasicEnemy;
 import fr.leroideskiwis.mapgame.managers.TextureManager;
 import fr.leroideskiwis.mapgame.specialobjects.RayonEnnemyKiller;
 import fr.leroideskiwis.mapgame.specialobjects.Respawn;
 import fr.leroideskiwis.plugins.KtpPluginManager;
 import fr.leroideskiwis.plugins.events.OnObjectSpawn;
-import fr.leroideskiwis.utils.SpecialObjects;
+import fr.leroideskiwis.utils.RandomPicker;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public final class Game {
     private boolean lock = false;
     private TextureManager textureManager;
     private List<Class<? extends SpecialObj>> specialObjs = new ArrayList<>();
+    private RandomPicker randomPicker = new RandomPicker(this);
 
     public boolean movePlayer(int x, int y){
         return player.move(x, y);
@@ -69,16 +71,6 @@ public final class Game {
         debugMode = false;
         this.pluginManager = new KtpPluginManager(this);
 
-
-//        specialObjs.add(RayonEnnemyKiller.class);
-//        specialObjs.add(TriggerAllSpecial.class);
-//        specialObjs.add(ClearEnnemies.class);
-//        specialObjs.add(Reparator.class);
-//        specialObjs.add(HorizontalOpenPath.class);
-//        specialObjs.add(VerticalOpenPath.class);
-        specialObjs.add(Respawn.class);
-        //specialObjs.add(InvinciblePlayer.class);
-
         map = new Map(this, size, size);
 
         player = new Player(this, map);
@@ -87,7 +79,7 @@ public final class Game {
         Gdx.app.log("INFO", "Generate defaults ennemies");
 
         for(int i = 0, rand = randomInt(1, 3); i < rand; i++){
-            map.generateRandom(new Enemy());
+            map.generateRandom(new BasicEnemy());
         }
         Gdx.app.log("INFO", "Generate defaults obstacles");
 
@@ -112,14 +104,7 @@ public final class Game {
 
         if (Math.random() < 0.05) {
 
-            SpecialObj special = SpecialObjects.randomItem(specialObjs.stream().map(specialObj -> {
-                try {
-                    return (SpecialObj)specialObj.getConstructors()[0].newInstance(this);
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-                return new RayonEnnemyKiller(this);
-            }).collect(Collectors.toList()));
+            SpecialObj special = randomPicker.randomItem();
 
             Location location = special.spawn(this, map, player);
             OnObjectSpawn event = new OnObjectSpawn(location, special);
@@ -192,22 +177,21 @@ public final class Game {
 
     private void spawnEnnemy(Map map) {
         if(debugMode) return;
+        BasicEnemy enemy = new BasicEnemy();
         if(Math.random() < 0.001){
 
-            Enemy enemy = new Enemy();
-            map.generateRandom(enemy);
+            map.generateRandom((Enemy)enemy.randomPick(randomPicker));
 
         }
 
         if(map.getLocationsByType(Enemy.class).isEmpty()){
-            Enemy enemy = new Enemy();
-            map.generateRandom(enemy);
+            map.generateRandom((Enemy)enemy.randomPick(randomPicker));
             return;
         }
 		
 		if(map.getEmptyCases().size() == 0) return;
 
-        map.setEntity(getLocationNearEnemy(), new Enemy());
+        map.setEntity(getLocationNearEnemy(), (Enemy)enemy.randomPick(randomPicker));
 
         //System.out.println("A new enemy has spawned in "+pos);
     }
