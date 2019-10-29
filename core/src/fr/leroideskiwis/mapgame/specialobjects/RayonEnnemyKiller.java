@@ -9,9 +9,6 @@ import fr.leroideskiwis.mapgame.entities.SpecialObj;
 import fr.leroideskiwis.utils.Interval;
 
 public class RayonEnnemyKiller extends SpecialObj {
-    public RayonEnnemyKiller(Game game) {
-        super(game, "rayonkiller.png");
-    }
 
     @Override
     public void execute(Game game, Map map, Player player) {
@@ -32,10 +29,7 @@ public class RayonEnnemyKiller extends SpecialObj {
     }
 
 
-    @Override
-    public String name() {
-        return "ennemy rayon killer";
-    }
+
 
     @Override
     public float chance() {

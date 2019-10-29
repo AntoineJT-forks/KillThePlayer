@@ -11,10 +11,6 @@ import java.util.stream.Collectors;
 
 public class Reparator extends SpecialObj {
 
-    public Reparator(Game game) {
-        super(game, "reparator.png");
-    }
-
     @Override
     public void execute(Game game, Map map, Player player) {
 
@@ -31,11 +27,6 @@ public class Reparator extends SpecialObj {
 
         }
 
-    }
-
-    @Override
-    public String name() {
-        return "obstacle reparator";
     }
 
     @Override

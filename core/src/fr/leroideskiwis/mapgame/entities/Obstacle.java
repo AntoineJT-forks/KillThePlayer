@@ -13,7 +13,6 @@ public class Obstacle extends Entity {
     }
 
     public Obstacle(SpecialObj obj){
-         super("obstacle.png");
          this.lostObject = obj;
     }
 

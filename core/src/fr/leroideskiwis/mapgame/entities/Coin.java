@@ -10,7 +10,6 @@ public class Coin extends Entity {
     private int amount;
 
     public Coin(int amount){
-        super("coin.png");
         this.amount = amount;
     }
 

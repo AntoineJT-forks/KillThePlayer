@@ -7,25 +7,11 @@ import fr.leroideskiwis.mapgame.Map;
 
 public abstract class SpecialObj extends Entity{
 
-    protected final Game game;
-
     protected abstract void execute(Game game, Map map, Player player);
-
-    public SpecialObj(Game game, String path) {
-        super(path);
-        this.game = game;
-    }
-
-    public SpecialObj(Game game){
-        this(game, null);
-    }
 
     public String toString(){
         return "!";
     }
-
-    public abstract String name();
-    public abstract float chance();
 
     public Location spawn(Game main, Map map, Player player){
 
@@ -40,7 +26,7 @@ public abstract class SpecialObj extends Entity{
 
     @Override
     public boolean onCollide(Game game, Map map, Player player) {
-        game.sendMessage("You found a "+name());
+        game.sendMessage("You found a "+block.name());
         execute(game, map, player);
         return true;
     }

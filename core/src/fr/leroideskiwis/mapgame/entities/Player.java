@@ -16,7 +16,6 @@ public class Player extends Entity {
     private final Invincibility invincibility;
 
     public Player(Game game, Map map){
-        super("player.png");
         this.map = map;
         this.game = game;
         this.invincibility = new Invincibility();

@@ -1,10 +1,9 @@
 package fr.leroideskiwis.mapgame;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import fr.leroideskiwis.mapgame.blocks.Block;
 import fr.leroideskiwis.mapgame.entities.Player;
-import fr.leroideskiwis.mapgame.managers.TextureManager;
 import fr.leroideskiwis.mapgame.specialobjects.InvinciblePlayer;
 
 import java.util.ArrayList;
@@ -14,16 +13,12 @@ import java.util.stream.Collectors;
 public class Entity {
 
     private List<Location> locations;
-    private String path;
+    protected Block block;
+    public Game game;
 
-    protected Entity(String path){
-        this(0, 0, path);
-    }
-
-    private Entity(int x, int y, String path) {
-        this.path = path;
+    public Entity() {
         this.locations = new ArrayList<>();
-        setLocation(x, y);
+        setLocation(0, 0);
     }
 
     public Entity setLocation(int x, int y){
@@ -63,18 +58,8 @@ public class Entity {
         return false;
     }
 
-    public void draw(TextureManager manager, SpriteBatch batch, Rectangle rectangle) {
-        Texture texture = texture(manager);
-        batch.draw(texture, rectangle.x, rectangle.y, rectangle.width*size(), rectangle.height*size());
-    }
-
-    private Texture texture(TextureManager manager) {
-        if(manager.has(this)){
-            return manager.getTexture(this);
-        } else {
-            manager.register(this, path);
-            return texture(manager);
-        }
+    public void draw(SpriteBatch batch, Rectangle rectangle) {
+        batch.draw(block.texture, rectangle.x, rectangle.y, rectangle.width*size(), rectangle.height*size());
     }
 
     public int size(){
@@ -108,5 +93,11 @@ public class Entity {
 
     public Location getFirstLocation(){
         return locations.get(0);
+    }
+
+    public void init(Game game, Block block){
+        this.block = block;
+        this.game = game;
+
     }
 }

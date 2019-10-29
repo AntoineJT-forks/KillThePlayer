@@ -7,12 +7,7 @@ import fr.leroideskiwis.mapgame.entities.Enemy;
 import fr.leroideskiwis.mapgame.entities.Player;
 import fr.leroideskiwis.mapgame.entities.SpecialObj;
 
-public class ClearEnnemies extends SpecialObj {
-
-
-    public ClearEnnemies(Game game) {
-        super(game, "clearennemis.png");
-    }
+public class ClearEnnemiesEntity extends SpecialObj {
 
     @Override
     public void execute(Game game, Map map, Player player) {
@@ -27,18 +22,8 @@ public class ClearEnnemies extends SpecialObj {
     }
 
     @Override
-    public String name() {
-        return "clear map !";
-    }
-
-    @Override
-    public float chance() {
-        return 0.004f;
-    }
-
-    @Override
     public Location spawn(Game main, Map map, Player player) {
-        if(Math.random() < 0.10)
+        if (Math.random() < 0.10)
             return super.spawn(main, map, player);
         else
             return new Location(0, 0);

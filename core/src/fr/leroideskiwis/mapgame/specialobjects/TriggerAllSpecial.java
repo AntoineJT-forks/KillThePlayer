@@ -6,25 +6,12 @@ import fr.leroideskiwis.mapgame.entities.Player;
 import fr.leroideskiwis.mapgame.entities.SpecialObj;
 
 public class TriggerAllSpecial extends SpecialObj {
-    public TriggerAllSpecial(Game game) {
-        super(game, "trigger.png");
-    }
 
     @Override
     public void execute(Game game, Map map, Player player) {
 
         game.sendMessage("All special objects are been triggered");
-        map.getEntitiesByType(SpecialObj.class).stream().filter(entity -> !(entity instanceof ClearEnnemies) && !(entity instanceof TriggerAllSpecial) && !(entity instanceof Respawn)).forEach(entity -> entity.onCollide(game, map, player));
-    }
-    
-    @Override
-    public String name() {
-        return "special trigger";
-    }
-
-    @Override
-    public float chance() {
-        return 0.01f;
+        map.getEntitiesByType(SpecialObj.class).stream().filter(entity -> !(entity instanceof ClearEnnemiesEntity) && !(entity instanceof TriggerAllSpecial) && !(entity instanceof Respawn)).forEach(entity -> entity.onCollide(game, map, player));
     }
 
 }

@@ -9,9 +9,6 @@ import fr.leroideskiwis.mapgame.entities.SpecialObj;
 import fr.leroideskiwis.utils.Interval;
 
 public class HorizontalOpenPath extends SpecialObj {
-    public HorizontalOpenPath(Game game) {
-        super(game, "openpathH.png");
-    }
 
     @Override
     public void execute(Game game, Map map, Player player) {
@@ -29,15 +26,5 @@ public class HorizontalOpenPath extends SpecialObj {
     public Location spawn(Game main, Map map, Player player) {
 
         return game.getLocationNearEnemy();
-    }
-
-    @Override
-    public String name() {
-        return "open path";
-    }
-
-    @Override
-    public float chance() {
-        return 0.075f;
     }
 }

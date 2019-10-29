@@ -7,9 +7,6 @@ import fr.leroideskiwis.mapgame.entities.Player;
 import fr.leroideskiwis.mapgame.entities.SpecialObj;
 
 public class InvinciblePlayer extends SpecialObj {
-    public InvinciblePlayer(Game game) {
-        super(game, "invincible.png");
-    }
 
     @Override
     public void execute(Game game, Map map, Player player) {
@@ -21,18 +18,8 @@ public class InvinciblePlayer extends SpecialObj {
     }
 
     @Override
-    public String name() {
-        return "player invincible";
-    }
-
-    @Override
-    public Location spawn(Game main, Map map, Player player) {
-        return new RayonEnnemyKiller(game).spawn(main, map, player);
-    }
-
-    @Override
-    public float chance() {
-        return 0.06f;
+    public Location spawn(Game game, Map map, Player player) {
+        return new RayonEnnemyKiller().spawn(game, map, player);
     }
 
 }
