@@ -1,9 +1,14 @@
+# Ignore binaries
 *.zip
+*.jar
+*.class
+out/
+build/
 
-/plugins/
+# Ignore IntelliJ IDEA generated folder
+.idea/
 
-/core/out/
+# /plugins/
 
-/core/build/
-
-/.idea/
+# Ignore useless gradle files
+.gradle/
